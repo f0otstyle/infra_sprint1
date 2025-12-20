@@ -5,9 +5,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-cg6*%6d51ef8f#4!r3*$vmxm4)abgjw8mo!4y-q*uq1!4$-89$'
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['89.169.162.241', '127.0.0.1', 'localhost', 'prokittygram.hopto.org']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -21,6 +21,14 @@ INSTALLED_APPS = [
     'djoser',
     'cats.apps.CatsConfig',
 ]
+
+STATIC_URL = '/static_backend/'
+
+STATIC_ROOT = BASE_DIR / 'static_backend'
+
+MEDIA_ROOT = '/var/www/kittygram/media/'
+MEDIA_URL = '/media/'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
