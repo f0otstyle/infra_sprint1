@@ -1,0 +1,5 @@
+IP: 89.169.162.241;
+name_taski: https://meproject.hopto.org;
+name_kittygram: https://prokittygram.hopto.org;
+login: admin;
+password: admin;

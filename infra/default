@@ -1,0 +1,84 @@
+server {
+
+    server_name 89.169.162.241 meproject.hopto.org;
+
+    location /api/ {
+        # Эта команда определяет, куда нужно перенаправить запрос.
+        proxy_pass http://127.0.0.1:8000;
+        client_max_body_size 20M;
+    }
+
+    location /admin/ {
+        proxy_pass http://127.0.0.1:8000;
+        client_max_body_size 20M;
+    }
+    
+    location / {
+        root   /var/www/taski;
+        index  index.html index.htm;
+        try_files $uri /index.html;
+    }
+    
+    listen 443 ssl;
+    ssl_certificate /etc/letsencrypt/live/meproject.hopto.org/fullchain.pem; 
+    ssl_certificate_key /etc/letsencrypt/live/meproject.hopto.org/privkey.pem; 
+    include /etc/letsencrypt/options-ssl-nginx.conf; 
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+}
+
+server {
+    listen 80;
+
+    server_name meproject.hopto.org;
+    return 301 https://meproject.hopto.org$request_uri;    
+} 
+
+
+server {
+
+    server_name prokittygram.hopto.org;
+
+   location /api/ {
+        # Эта команда определяет, куда нужно перенаправить запрос.
+        proxy_pass http://127.0.0.1:8080;
+        client_max_body_size 20M;
+    }
+
+   location /admin/ {
+        proxy_pass http://127.0.0.1:8080;
+        client_max_body_size 20M;
+    }
+
+    
+    location / {
+        root   /var/www/kittygram;
+        index  index.html index.htm;
+        try_files $uri /index.html;
+    }
+
+   location /static/ {
+        alias /var/www/django_static/;
+       
+    }
+    
+    location /media/ {
+        alias /var/www/kittygram/media/;
+    }
+
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/prokittygram.hopto.org/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/prokittygram.hopto.org/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}  
+server {
+
+    listen 8081;
+
+    server_name prokittygram.hopto.org;
+    return 301 https://prokittygram.hopto.org$request_uri;
+
+}
